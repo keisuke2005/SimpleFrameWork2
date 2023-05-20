@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ログイン</title>
+        <link rel="stylesheet" href="/sso-auth/foundation/css/common.css">
+        <link rel="stylesheet" href="/sso-auth/foundation/bootstrap/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container my-5">
+            <div class="row my-5">
+                <div class="col-12 text-center">
+                    <h1>サインイン</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div  id="message" class="col-12 text-center"></div>
+            </div>
+            <div class="row my-5">
+                <div class="offset-md-3 col-md-6 co-sm-12 text-center my-2">
+                    <input id="user" type="text" class="form-control" placeholder="ユーザー名" inputmode="email">
+                </div>
+                <div class="offset-md-3 col-md-6 col-sm-12 text-center my-2">
+                    <input id="pswd" type="password" class="form-control" placeholder="パスワード" inputmode="text">
+                </div>
+                <div class="form-check offset-md-3 col-md-6 col-sm-12 px-5 my-2">
+                    <input type="checkbox" class="form-check-input" value="" id="formCheckDefault">
+                    <label for="formCheckDefault" class="form-check-label">
+                        ユーザー名を記憶する
+                    </label>
+                </div>
+                <div class="offset-3 col-6 text-center my-2">
+                    <button id="login" class="form-control text-center btn btn-primary">ログイン</button>
+                </div>
+            </div>
+        </div>
+        <script src="/sso-auth/foundation/bootstrap/js/bootstrap.min.js"></script>
+        <script type="module">
+            import { WebApi,LoadingCircle,Modal } from "/sso-auth/foundation/js/common.js";
+            const lc = new LoadingCircle({});
+            
+            const Login = (() => {
+                async function executeLogin(){
+                    const user = document.getElementById('user').value;
+                    const pswd = document.getElementById('pswd').value;
+                    const response = await new WebApi({}).call("/sso-auth/api/authenticate","POST",{user:user,pswd:pswd},true);
+                    const res = JSON.parse(response);
+                    if(res.result == false){
+                        document.getElementById('message').innerHTML = res.message;
+                        return false;
+                    }
+                    
+                    location.href = '/sso-portal/index?authCode=' + res.authCode;
+                }
+                function bind(){
+                    document.getElementById('login').onclick = function(){
+                        executeLogin();
+                    }
+                }
+                return {
+                    //初期処理
+                    startup:() => {
+                        lc.show();
+                        bind();
+                        lc.hide();
+                    }
+                }
+            })();
+            Login.startup();
+        </script>
+    </body>
+</html>

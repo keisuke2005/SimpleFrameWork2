@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ポータル</title>
+        <link rel="stylesheet" href="/sso-portal/foundation/css/common.css">
+        <link rel="stylesheet" href="/sso-portal/foundation/bootstrap/css/bootstrap.min.css">
+        <style>
+            
+            body {
+                padding-top :110px;
+            }
+            header {
+                height:100px;
+            }
+
+            header img {
+                height:50px;
+            }
+            header .dropdown-menu li a {
+                border:none;
+            }
+
+            footer img {
+                height:30px;
+            }
+        </style>
+    </head>
+    <body class="bg-light">
+        <header class="container-fluid bg-white fixed-top d-flex align-items-center z-1">
+            <div class="container d-flex justify-content-between align-items-center">
+                <div class="">
+                    <h1>ヘッダー</h1>
+                </div>
+                <div class="dropdown">
+                    <img role="button" type="button" class="bg-light p-2 rounded-circle dropdown-toggle" 
+                    src="img/user_icon.png" data-bs-toggle="dropdown" aria-expanded="false">
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item eniuy-link" page="#toppage" href="#">トップ</a></li>
+                        <li><a class="dropdown-item eniuy-link" page="#mypage" href="#">マイページ</a></li>
+                        <li><a class="dropdown-item" href="#">ログアウト</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main class="container tab-content">
+            <!-- toppage -->
+            <page-def>top.html</page-def>
+            <!-- mypage -->
+            <page-def>mypage.html</page-def>
+            <!-- chatpage -->
+            <page-def>chat.html</page-def>
+            <!-- chatpage -->
+            <page-def>chatmessage.html</page-def>            
+
+
+        </main>
+        <footer class="container-fluid bg-white fixed-bottom text-white z-1 ">
+            <div class="d-flex justify-content-between py-3 px-4">
+                <div><img src="img/home.png" onclick="pageActive('#toppage')"></div>
+                <div><img src="img/search.png"></div>
+                <div><img src="img/chat.png" onclick="pageActive('#chatpage')"></div>
+                <div><img src="img/mypage.png" onclick="pageActive('#mypage')"></div>
+            </div>
+        </footer>
+        <script src="/sso-portal/foundation/bootstrap/js/popper.min.js"></script>
+        <script src="/sso-portal/foundation/bootstrap/js/bootstrap.min.js"></script>
+        <script type="module">
+            import { WebApi,LoadingCircle,Modal } from "./foundation/js/common.js";
+            import { Constants } from "./js/Constants.js";
+            const lc = new LoadingCircle({});
+
+            const base = (() => {
+                function page(){
+                    const pages = document.querySelectorAll('.eniuy-link');
+                    for (let page of pages) {
+                        page.addEventListener('click',function(e){
+                            document.querySelector('.tab-content > .active').classList.remove('active');
+                            const pageName = e.target.getAttribute('page');
+                            pageActive(pageName);
+                        });
+                    }
+                }
+
+
+                function _pageActive(pageName,param = {}){
+                    _pagePush(pageName);
+                    const actives = document.querySelector('.tab-content > .active');
+                    if (actives) {
+                        actives.classList.remove('active');
+                    }
+                    console.log(pageName);
+                    document.querySelector(pageName).classList.add('active');
+                    const func = eval(pageName.replace(/#/g,'') + ".startup");
+                    func(param);
+                }
+
+                function _pagePush(pageName){
+                    base.pageStack.push(pageName);
+                }
+
+                function _pagePop(pageName){
+                    return base.pageStack.pop();
+                }
+                return {
+                    pageStack:[],
+                    startup:(param) => {
+                        lc.show();
+                        _pageActive('#toppage',{hoge:1});
+                        lc.hide();
+                    },
+                    pageActive:_pageActive
+                }
+            })();
+            base.startup({});
+            window.pageActive = base.pageActive;
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,6 @@
+RewriteEngine on
+RewriteBase /sso-proxy/
+RewriteRule index.php - [L]
+RewriteRule ^((js|css|img)/.*)$ webroot/$1 [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule (.*) index.php [L]

@@ -1,0 +1,890 @@
+@charset "UTF-8";
+/* reset */
+body, h1, h2, h3, h4, h5, h6, p, address,
+ul, ol, li, dl, dt, dd, img, form, table, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  text-align: left;
+  list-style-type: none;
+  border-collapse: collapse;
+}
+
+textarea { font-size: 100%; vertical-align:middle;}
+img { border-style: none; display: block; }
+hr { display: none; }
+em{font-style: normal}
+input{line-height:auto;vertical-align:middle;}
+strong.more{color:#c30}
+a{text-decoration: none;}
+
+html {
+
+}
+
+body {
+  font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+  /* 背景を白より濃い色にうっすらしておく */
+  background-color: #fafafa;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/**************************************************/
+
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 56px;
+  text-align: center;
+}
+
+h1 span {
+  border-top: 2px solid #2da690;
+  padding: 20px;
+  text-align: center;
+}
+
+a {
+  cursor: pointer;
+}
+
+.other {
+  opacity: 0;
+  transition: all 1s;
+  margin: 56px 0 0 auto;
+
+  color: black;
+  display: block;
+  text-align: right;
+  font-weight: bold;
+}
+
+.other:hover {
+  cursor: pointer;
+  color: #2da690;
+  transition: 0.1s;
+}
+
+.other:hover i {
+  transform: translate(7px,0);
+  transition: 0.3s;
+}
+
+/* フェードイン */
+.fadein-scroll {
+  /* 全ての要素が所要時間1秒で */
+  transition: all 1s;
+  /* 透明 */
+  opacity: 0;
+  /* fadein-activeがremoveされた際もこのアクション */
+}
+
+.fadein-from-up {
+  /* 上 */
+  transform: translate(0,-50px);
+}
+
+.fadein-from-down {
+  /* 下 */
+  transform: translate(0,50px);
+}
+
+.fadein-from-right {
+  /* 右 */
+  transform: translate(50px,0);
+}
+
+.fadein-from-left {
+  /* 左 */
+  transform: translate(-50px,0);
+}
+
+.fadein-active01 {
+  /* 不透明になり、元の要素の位置に戻る */
+  opacity: 1;
+  transform: translate(0,0);
+}
+
+.fadein-active02 {
+  opacity: 0.9;
+  transform: translate(0,0);
+}
+
+/* Font Awesome  */
+.fa-circle-arrow-right::before {
+  content:"\f0a9";
+  color: #2da690;
+}
+
+/* 汎用ラッパー */
+.wrap {
+  /* 親要素に対して100%の幅 */
+  width: 100%;
+  /* 最大幅 */
+  max-width: 1200px;
+  /* 自要素 中央揃え */
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* イメージ用汎用ラッパー */
+.img-wrap {
+  /* 親要素に対して100% */
+  width: 100%;
+  /* ブラウザに対して100% */
+  height: 100vh;
+}
+
+.link {
+  /* 指マークへ変更 */
+  cursor: pointer;
+}
+
+/* ハンバーガー非表示 */
+.hamburger {
+  display: none;
+}
+
+/* ハンバーガー用サイドバー非表示 */
+.nav-02 {
+  display: none;
+}
+
+
+/*
+headerセクション
+構造
+  header
+    div.wrap
+      img
+      nav
+        ul
+          li...
+*/
+header {
+  background-color: white;
+  /* 親要素に対して100% */
+  width: 100%;
+  height: 120px;
+  /* 固定位置 */
+  position: fixed;
+  /* レイヤーを上へ */
+  z-index: 2;
+  /* 子要素は横並び */
+  display: flex;
+  /* フレックスアイテムが高さ的に中央になる */
+  align-items: center;
+  /* 透明状態からjsでふんわり表示 */
+  opacity: 0;
+  transition: 5s;
+  transition-delay: 1s;
+}
+
+header div.wrap {
+  /* 子要素は横並び */
+  display: flex;
+  /* フレックスアイテムが高さ的に中央になる */
+  align-items: center;
+  /* フレックスアイテムを均等に配置 */
+  justify-content: space-between;
+}
+
+header ul {
+  /* 横並び */
+  display:flex;
+  /* フレックスアイテムを末尾寄せ */
+  justify-content: flex-end;
+}
+
+header li {
+  padding-right: 20px;
+}
+
+header li:hover {
+  /* セレクタにホバーしたら色変化 */
+  color: #2da690;
+  transition: color 0.1s;
+}
+
+/*
+main-visualセクション
+構造
+div.main-visual
+  div.img-wrap
+    img...
+  p
+    strong
+*/
+.main-visual img {
+  width: 100%;
+  height: 100vh;
+  /* 画像を引き伸ばしたりせずにトリミング */
+  object-fit:cover;
+  /* 絶対位置になる 従って これを指定されたイメージは全て重なり、スライドしやすくなる */
+  position: absolute;
+}
+
+.main-visual p {
+  font-size: 32px;
+  color: white;
+  padding: 40px;
+  font-weight: bold;
+  /* imgタグと同一階層なので、これも重なる。位置はbottom,leftで指定*/
+  position: absolute;
+  /* 下から0のところ */
+  bottom: 0;
+  /* 左から0のところ */
+  left: 0;
+  /* 所要時間1秒で変化 */
+  transition: 1s;
+}
+
+.main-visual strong {
+  color: #FCE244;
+}
+
+/*
+Our Serviceセクション
+構造
+div.service
+  h1
+  ul
+    li...
+      img
+      a
+        p.catch
+        p.sub
+  div.wrap
+    a.other
+      i
+*/
+.service {
+  padding: 100px 0;
+}
+
+.service ul li {
+  height: 25vw;
+  min-height: 340px;
+  margin-bottom: 56px;
+  /* 横並び */
+  display: flex;
+  /* フレックスアイテム高さ的に中央 */
+  align-items: center;
+}
+
+.service ul img {
+  /* トリミング */
+  object-fit: cover;
+  width: 50%;
+  /* 横の画面幅の25% */
+  height: 25vw;
+}
+
+.service ul a {
+  position: relative;
+  width: 50%;
+  max-width: 600px;
+  /* 横の画面幅の23% */
+  height: 23vw;
+  padding:40px;
+  background-color: white;
+  /* 処理が遅れる */
+  transition-delay: 0.38s;
+}
+
+.service p.catch {
+  /* 文字サイズ */
+  font-size: 32px;
+  /* 太字 */
+  font-weight: bold;
+  /* 文字色 */
+  color: black;
+  /* マージン下 */
+  margin-bottom: 20px;
+}
+
+.service-item1 a,.service-item3 a {
+  /* position relativeとセットで元の位置からどれだけずらすか */
+  left: -5vw;
+}
+
+.service-item2 {
+  /* フレックスアイテムを逆から配置 */
+  flex-direction: row-reverse;
+}
+
+.service-item2 a {
+  /* position relativeとセットで元の位置からどれだけずらすか */
+  right: -5vw;
+}
+
+/*
+Our Visionセクション
+構造
+div.vision
+  div.wrap
+    h1
+    h2
+    ul
+      li...
+        p.catch
+        p.sub
+*/
+.vision {
+  /* 背景画像 */
+  background-image: url(images/bg01.jpeg);
+  /* トリミング */
+  object-fit: cover;
+  /* 画像サイズ（このdiv）高さ */
+  height: 650px;
+  /* 上パディング100px 横0  */
+  padding: 100px 0;
+}
+
+.vision h2 {
+  /* display: block; */
+  /* 中央よせ */
+  text-align: center;
+  font-size: 2rem;
+  /* マージン縦54 横0 */
+  margin: 54px 0;
+  /* 遅れて表示 */
+  transition-delay: 0.5s;
+}
+.vision ul {
+  /* li横並び */
+  display: flex;
+  /* li中央寄 */
+  justify-content: center;
+}
+.vision li {
+  /* 横padding30 */
+  padding: 0 30px;
+  /* 右線 */
+  border-right: 1px solid gainsboro;
+}
+
+.vision li:last-child {
+  /* 一番右のliの右線削除 */
+  border-right: none;
+}
+
+.vision .catch {
+  font-size: 2rem;
+  color: #2da690;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.vision .sub {
+  font-size: 1em;
+  text-align: center;
+}
+
+/* 
+Newsセクション
+構造
+div.news
+  div.wrap
+    h1
+      span
+    ul
+      li...
+        img
+        div.news-content 
+          div.news-meta
+            time
+            a
+            a
+            a
+          div.title
+            a
+    a
+      i
+*/
+.news {
+  padding: 120px 0;
+}
+
+.news li {
+  /* 横並び */
+  display: flex;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.news li > img {
+  width: 150px;
+  height: 80px;
+  /* object-fit:cover; */
+}
+
+.news-meta time {
+  font-size: 0.8em;
+  /* 横20 */
+  margin: 0 20px;
+  color: gainsboro;
+}
+
+.news-meta a {
+  font-size: 0.8em;
+  font-weight: 700;
+  /* 右10px */
+  margin-right: 10px;
+}
+
+.news-title {
+  margin: 10px 10px 10px 20px;
+  color: #0000008A;
+}
+
+.news-content:hover .news-title > a {
+  /* news-contentにhoverしたら.news-title直下のaが色変わる */
+  color: #2da690;
+  /* 0.4秒で処理 */
+  transition: 0.4s;
+}
+
+/* 
+About usセクション
+構造
+div.about
+  div.wrap
+    h1
+    div.about-content-inner-wrap
+      ul
+        li...
+          p.about-head
+          p.about-data
+            a.map-link
+              i
+*/
+.about {
+  /* 縦120 */
+  padding: 120px 0;
+  /* background-image: url(image/bg02.jpg); */
+}
+.about ul {
+  width: 45%;
+  /* 横並び */
+  display: inline-block;
+}
+.about li {
+  /* 横並び */
+  display: flex;
+  /* フレックスアイテムを折り返して複数行で表示させる */
+  flex-wrap: wrap;
+}
+.about-head {
+  /* 下線 */
+  border-bottom: 1px solid #2da690;
+  /* 親要素の17% */
+  width: 17%;
+  /* 縦1em */
+  padding: 1em 0;
+  /* 右3px */
+  margin-right: 3px;
+}
+
+.about-data {
+  /* 親の80% */
+  width: 80%;
+  color: #0000008A;
+  /* 下線 */
+  border-bottom: 1px solid gainsboro;
+  /* 縦1em */
+  padding: 1em 0;
+}
+
+.map-link {
+  color: #2da690;
+  /* 改行縦並び */
+  display: block;
+  margin-top: 5px;
+}
+
+.map-link:hover {
+  color: #207767;
+}
+
+.map-link:hover i {
+  color: #207767;
+}
+
+.about-content-inner-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.about-content-inner-wrap img {
+  width: 45%;
+  object-fit: cover;
+}
+
+/*
+Recruitセクション
+構造
+div.recruit
+  div.wrap
+    h1
+    h2
+    div.recruit-jobs
+      p
+      div.jobs
+        a...
+          i
+    a
+      i
+*/
+.recruit {
+  padding: 120px 0;
+}
+
+.recruit h2 {
+  font-size: 1.3em;
+  font-weight: bold;
+  text-align: center;
+  padding: 60px 0;
+}
+
+.recruit h2 span {
+  color: #2da690;
+}
+
+
+.recruit-jobs {
+  background-color: white;
+  padding: 40px 0;
+}
+
+.recruit-jobs > p {
+  text-align: center;
+  padding-bottom: 40px;
+  font-weight: bold;
+}
+
+.jobs {
+  /* 横並び */
+  display: flex;
+  /* 中央揃え */
+  justify-content: center;
+}
+
+.jobs a {
+  text-align: center;
+  width: 20%;
+  padding: 15px 0;
+  margin: 0 10px;
+  border: 1px solid gainsboro;
+  font-weight: bold;
+}
+
+.jobs a:hover {
+  background-color: #2da690;
+  color: white;
+  transition: 0.1s;
+}
+
+/*
+footer
+構造
+footer
+  div.footer
+    div.footer-left
+      a
+        img
+      p
+      small
+    div.footer-right
+      nav
+        ul
+          li
+*/
+footer {
+  background-color: #4D4D4D;
+  width: 100%;
+}
+
+footer .wrap {
+  display :flex;
+  justify-content: space-between;
+  padding: 50px 30px;
+}
+
+.footer-left img {
+  width: 80%;
+  max-width: 200px;
+  height: auto;
+}
+
+.footer-left p {
+  color: #FFFFFF8A;
+  font-size: 0.9em;
+  margin: 20px 0;
+}
+
+.footer-left small {
+  color: #FFFFFF8A;
+}
+
+.footer-right nav {
+  color: #FFFFFFDE;
+  margin-bottom: 30px;
+}
+
+.footer-right ul {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer-right li {
+  margin-right: 5%;
+  cursor: pointer;
+}
+
+/* 768px以下で以下のセレクタオーバーライド */
+@media (max-width: 768px) {
+  
+  .nav-01 {
+    display: none;
+  }
+
+  .nav-02 {
+    display: block;
+    position: fixed;
+    right: -40%;
+    width: 40%;
+    height: 100%;
+    background-color: white;
+    opacity: 0.8;
+    padding: 7.5rem 2.5rem;
+    z-index: 1;
+    transition:0.7s;
+    overflow-x: hidden;
+  }
+
+  .nav-02 ul{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-02 ul li {
+    margin-bottom: 2.5rem;
+    color: #2da690;
+  }
+
+  .hamburger {
+    display: block;
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+    z-index: 3;
+  }
+  .hamburger .bar{
+    position: absolute;
+    width: 2rem;
+    height: 2px;
+    display: block;
+    background: #2da690;
+    transition: 0.1s;
+    box-sizing: border-box;
+  }
+  
+  .hamburger .bar-top {
+    top: 10px;
+  }
+  
+  .hamburger .bar-middle {
+    line-height: 1.5rem;
+    top: 48%;
+  }
+
+  .hamburger .bar-bottom {
+    bottom: 10px;
+  }
+  .hamburger.close .bar-top{
+    transform: rotate(45deg);
+    top: 48%;
+  }
+  .hamburger.close .bar-middle{
+    display: none;
+  }
+  .hamburger.close .bar-bottom{
+    transform: rotate(-45deg);
+    bottom: 48%;
+  } 
+  .nav-02-active {
+    display: block;
+    right: 0;
+  }
+  
+  .wrap{
+    padding: 0 40px;
+  }
+
+  .vision {
+    height: 900px;
+  }
+
+  .vision ul {
+    /* 縦並び */
+    flex-direction: column;
+  }
+  
+
+  .vision li{
+    border: none;
+    margin-bottom: 30px;
+  }
+
+  .vision .catch {
+    font-size: 1.7rem;
+    margin-bottom: 18px;
+  }
+
+  .vision ul .br-sp {
+    display: none;
+  }
+
+  .about-content-inner-wrap {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+  }
+
+  .about-content-inner-wrap ul {
+    width: 100%;
+  }
+  
+  .about-content-inner-wrap img {
+    margin: auto;
+    width: 90%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .jobs {
+    flex-wrap: wrap;
+  }
+
+  .jobs a {
+    width: 240px;
+    height: auto;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 500px) {
+  .wrap{
+    padding: 0 24px;
+  }
+
+  .service ul{
+    padding: 0 24px;
+  }
+
+  .service ul li {
+    display: inline-block;
+    margin-bottom: 30px;
+    height: 600px;
+  }
+
+  .service ul img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .service ul a {
+    display: block;
+    width: 100%;
+    height: 300px;
+    position: static;
+    margin-bottom: 30px;
+  }
+
+  .service p.catch {
+    font-size: 1.2em;
+  }
+
+  .service p.sub {
+    font-size: 0.9em;
+  }
+
+  .service-item1 a > img {
+    width: 55%;
+    height: auto;
+  }
+
+  .service .other {
+    margin-top: 0;
+  }
+
+  .vision {
+    height: 750px;
+  }
+
+  .vision h2{
+    font-size: 32px;
+    text-align: left;
+  }
+
+  .vision h2 .br-sp {
+    display: none;
+  }
+
+  .vision li{
+    padding-left: 0;
+  }
+
+  .vision .catch {
+    text-align: left;
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+  }
+
+  .vision .sub {
+    text-align: left;
+    font-size: 0.9em;
+  }
+
+  .news li {
+    flex-direction: column;
+  }
+
+  .news li > img {
+    /* width: 100%; */
+    /* height: 50vw; */
+  }
+
+  .jobs {
+    padding: 40px;
+  }
+
+  .jobs a {
+    width: 100%;
+  }
+
+  footer .wrap {
+    flex-direction: column-reverse;
+  }
+
+  .footer-right ul{
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #313131;
+    text-align: left;
+    justify-content: flex-start;
+    overflow-x: scroll;
+  }
+}

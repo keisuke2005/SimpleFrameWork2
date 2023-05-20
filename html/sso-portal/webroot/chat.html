@@ -1,0 +1,16 @@
+<section id="chatpage" class="tab-pane">
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-action" onclick="pageActive('#chatmessage',{userId:1})">Item #1</li>
+        <li class="list-group-item list-group-item-action" onclick="pageActive('#chatmessage',{userId:2})">Item #2</li>
+        <li class="list-group-item list-group-item-action" onclick="pageActive('#chatmessage',{userId:3})">Item #3</li>
+    </ul>
+    <script>
+        const chatpage = (() => {
+            return {
+                startup:() => {
+                    console.log(2);
+                }
+            }
+        })();
+    </script>
+</section>
